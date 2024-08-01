@@ -1,6 +1,11 @@
 package com.santos.helpdesk.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.santos.helpdesk.enums.Profile;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,13 +16,23 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Data
+@Entity
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String cpf;
+
     private String email;
+
     private String password;
+
     private Set<Long> profiles = new HashSet<>();
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate datCreate = LocalDate.now();
 
     public Person() {
