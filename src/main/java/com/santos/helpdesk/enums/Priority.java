@@ -1,9 +1,14 @@
 package com.santos.helpdesk.enums;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public enum Priority {
-    LOW(0L, "LOW"), AVERAGE(1L, "AVERAGE"), HIGH(2L, "HIGH");
+    LOW(0L, "LOW"),
+    AVERAGE(1L, "AVERAGE"),
+    HIGH(2L, "HIGH");
 
     private final Long code;
 
@@ -12,14 +17,6 @@ public enum Priority {
     Priority(Long code, String typeRole) {
         this.code = code;
         this.description = typeRole;
-    }
-
-    public Long getCode() {
-        return code;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public static Priority toEnum(Long code) {

@@ -1,9 +1,14 @@
 package com.santos.helpdesk.enums;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public enum Status {
-    OPEN(0L, "OPEN"), PROGRESS(1L, "PROGRESS"), CLOSED(2L, "CLOSED");
+    OPEN(0L, "OPEN"),
+    PROGRESS(1L, "PROGRESS"),
+    CLOSED(2L, "CLOSED");
 
     private final Long code;
 
@@ -12,14 +17,6 @@ public enum Status {
     Status(Long code, String typeRole) {
         this.code = code;
         this.description = typeRole;
-    }
-
-    public Long getCode() {
-        return code;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public static Status toEnum(Long code) {
