@@ -2,10 +2,7 @@ package com.santos.helpdesk.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.santos.helpdesk.enums.Profile;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -17,15 +14,17 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Data
 @Entity
-public class Person {
+public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
+    @Column(unique = true)
     private String cpf;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
