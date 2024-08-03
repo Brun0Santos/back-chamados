@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
-@Data
 @Entity
 public abstract class Person {
     @Id
@@ -33,6 +31,14 @@ public abstract class Person {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate datCreate = LocalDate.now();
+
+    public Person(Long id, String name, String cpf, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.cpf = cpf;
+        this.email = email;
+        this.password = password;;
+    }
 
     public Person() {
         addProfile(Profile.CLIENT);
