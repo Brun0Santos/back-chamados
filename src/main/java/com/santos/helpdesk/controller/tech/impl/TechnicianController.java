@@ -1,6 +1,6 @@
-package com.santos.helpdesk.controller.tech;
+package com.santos.helpdesk.controller.tech.impl;
 
-import com.santos.helpdesk.controller.ITechnicianController;
+import com.santos.helpdesk.controller.tech.ITechnicianController;
 import com.santos.helpdesk.dto.TechnicianDto;
 import com.santos.helpdesk.service.tech.impl.TechnicianService;
 import jakarta.validation.Valid;
