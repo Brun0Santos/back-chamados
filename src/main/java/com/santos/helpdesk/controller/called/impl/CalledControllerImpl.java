@@ -25,7 +25,7 @@ public class CalledControllerImpl implements ICalledController {
     @Override
     @GetMapping
     public ResponseEntity<List<CalledDto>> findAll() {
-        return null;
+        return ResponseEntity.ok().body(calledService.findAll());
     }
 
     @Override
