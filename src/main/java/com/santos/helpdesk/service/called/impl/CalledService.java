@@ -22,12 +22,12 @@ public class CalledService implements ICalledService {
     @Override
     public CalledDto findById(long id) {
         Called called = calledRepository.findById(id).orElseThrow(() -> new NotFoundException("Called not found"));
-        return calledMapper.modelToDtoClient(called);
+        return calledMapper.modelToDtoCalled(called);
     }
 
     @Override
     public List<CalledDto> findAll() {
-        return calledMapper.modelToDtoClient(calledRepository.findAll());
+        return calledMapper.modelToDtoCalled(calledRepository.findAll());
     }
 
     @Override
@@ -37,11 +37,17 @@ public class CalledService implements ICalledService {
 
     @Override
     public CalledDto update(Long id, CalledDto dto) {
-        return null;
+        checkCalledExistsById(id);
+        Called called = calledMapper.dtoToModel(dto);
+        calledRepository.save(called);
+        return calledMapper.modelToDtoCalled(called);
     }
 
     @Override
     public void delete(Long id) {
+    }
 
+    private Called checkCalledExistsById(Long id) {
+        return calledRepository.findById(id).orElseThrow(() -> new NotFoundException("Called Not Found"));
     }
 }
