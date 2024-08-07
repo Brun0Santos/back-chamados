@@ -3,7 +3,9 @@ package com.santos.helpdesk.controller.called.impl;
 import com.santos.helpdesk.controller.called.ICalledController;
 import com.santos.helpdesk.dto.CalledDto;
 import com.santos.helpdesk.service.called.impl.CalledService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,13 +32,14 @@ public class CalledControllerImpl implements ICalledController {
 
     @Override
     @PostMapping
-    public ResponseEntity<Void> save(CalledDto calledDto) {
-        return null;
+    public ResponseEntity<Void> save(@RequestBody @Valid CalledDto calledDto) {
+        calledService.save(calledDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
     @PutMapping
-    public ResponseEntity<CalledDto> update(Long id, CalledDto calledDto) {
+    public ResponseEntity<CalledDto> update(@PathVariable @Valid Long id, CalledDto calledDto) {
         return null;
     }
 
