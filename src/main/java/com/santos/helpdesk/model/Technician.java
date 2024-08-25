@@ -1,28 +1,47 @@
 package com.santos.helpdesk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.santos.helpdesk.enums.Profile;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Entity
-public class Technician extends Person {
+@Getter
+@Setter
+public class Technician {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @Column(unique = true)
+    private String cpf;
+
+    @Column(unique = true)
+    private String email;
+
+    private String password;
+
+    private Set<Profile> profiles = new HashSet<>();
+
     @OneToMany(mappedBy = "technician")
+    @JsonIgnore
     private List<Called> called = new ArrayList<>();
 
-    public Technician(Long id, String name, String cpf, String email, String password) {
-        super(id, name, cpf, email, password);
-        addProfile(Profile.CLIENT);
+    @PostConstruct
+    public void initializeProfile() {
+        this.profiles.add(Profile.TECHNIQUE);
     }
 }
