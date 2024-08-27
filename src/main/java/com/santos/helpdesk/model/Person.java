@@ -2,9 +2,9 @@ package com.santos.helpdesk.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.santos.helpdesk.enums.Profile;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -12,7 +12,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-public abstract class Person {
+@AllArgsConstructor
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,28 +28,17 @@ public abstract class Person {
 
     private String password;
 
-    private Set<Long> profiles = new HashSet<>();
+    private Set<Profile> profiles = new HashSet<>();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate datCreate = LocalDate.now();
-
-    public Person(Long id, String name, String cpf, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.cpf = cpf;
-        this.email = email;
-        this.password = password;;
-    }
-
-    public Person() {
-        addProfile(Profile.CLIENT);
-    }
+    private LocalDate creationDate = LocalDate.now();
 
     public Set<Profile> getProfiles() {
-        return profiles.stream().map(Profile::toEnum).collect(Collectors.toSet());
+        return profiles.stream().map(x -> Profile.toEnum(x.getCode())).collect(Collectors.toSet());
     }
 
-    public void addProfile(Profile profile) {
-        this.profiles.add(profile.getCode());
+    @PostConstruct
+    public void initializeProfile() {
+        this.profiles.add(Profile.TECHNIQUE);
     }
 }
